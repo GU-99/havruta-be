@@ -1,0 +1,37 @@
+name: 🐞 버그
+description: 개발 도중 버그가 발생했나요?
+labels: ["🐞 버그"]
+projects: ["GU-99/4"]
+body:
+  - type: textarea
+    attributes:
+      label: 🐞 설명
+      description: "버그에 대한 설명을 작성해 주세요."
+      placeholder: "예: 특정 API 엔드포인트에서 500 내부 서버 오류가 발생합니다. 오류 메시지는 'NullPointerException'입니다. 해당 엔드포인트는 /api/v1/users입니다."
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: 📄 버그 로그
+      description: "로그가 있으면 복붙해 주세요."
+      placeholder: "로그를 여기에 붙여넣어 주세요."
+      render: shell
+    validations:
+      required: false
+
+  - type: textarea
+    attributes:
+      label: 🌏 버그 발생 환경
+      description: "버그가 발생한 환경에 대한 정보를 제공해주세요. 운영체제, 개발 도구, 브라우저, 브라우저 버전 등을 포함해주세요."
+      placeholder: "예: Windows 10, IntelliJ IDEA, Chrome 89, Node.js 14.16"
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: 📚 참고 자료
+      description: "작업과 관련해서 참고할 만한 자료나 링크가 있다면 제공해주세요."
+      placeholder: "참고할 자료나 링크를 입력해주세요."
+    validations:
+      required: false

@@ -1,0 +1,25 @@
+name: 📝 문서화
+description: 프로젝트 문서화 작업이 필요한가요?
+labels: ["📚 문서화"]
+projects: ["GU-99/4"]
+body:
+  - type: textarea
+    attributes:
+      label: 🎯 작업 목표
+      description: "이 작업의 목표와 기대 결과를 설명해주세요."
+      placeholder: "예: 사용자가 API를 쉽게 이해하고 사용할 수 있도록 문서 작성"
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: ✅ 작업할 내용
+      description: "작업을 수행하기 위한 단계를 간단히 설명해주세요. 각 단계는 가능한 한 간단하고 명료하게 작성해주세요."
+      placeholder: |
+        1. 기존 문서 확인 (예: README, API 문서)
+        2. 새로운 정보 추가 (예: 새 API 엔드포인트)
+        3. 문서 업데이트 (예: 코드 예제 추가)
+        4. 리뷰 및 피드백 반영
+        5. 최종 배포 (예: 문서 사이트 업데이트)
+    validations:
+      required: true

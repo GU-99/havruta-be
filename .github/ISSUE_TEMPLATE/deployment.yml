@@ -1,0 +1,33 @@
+name: 🚀 배포
+description: 배포와 관련된 작업이 필요한가요?
+labels: ["⚙️ 데브옵스"]
+projects: ["GU-99/4"]
+body:
+  - type: textarea
+    attributes:
+      label: 🎯 작업 목표
+      description: "이 작업의 목표와 기대 결과를 설명해주세요."
+      placeholder: "예: 배포 시간을 단축하기 위해 스크립트를 최적화, 배포 과정에서 발생하는 오류를 줄이기 위해 파이프라인 수정 등"
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: ✅ 작업할 내용
+      description: "작업을 수행하기 위한 단계를 상세히 설명해주세요."
+      placeholder: |
+        1. 기존 배포 스크립트 분석
+        2. 새로운 스크립트 작성 및 테스트
+        3. 테스트 환경에서 배포 시뮬레이션
+        4. 실제 배포 환경에서 테스트
+      render: bash
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: 📚 참고 자료
+      description: "작업과 관련해서 참고할 만한 자료나 링크가 있다면 제공해주세요."
+      placeholder: "참고할 자료나 링크를 입력해주세요."
+    validations:
+      required: false
