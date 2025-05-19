@@ -11,11 +11,14 @@
 
 ## 🏷️ PR Type (check all applicable)
 
-- [ ] 🔧 Refactor
 - [ ] ✨ Feature
+- [ ] ✅ Test
 - [ ] 🐛 Bug Fix
-- [ ] 🚀 Optimization
+- [ ] 🔧 Refactor
+- [ ] ⚡ Performance
+- [ ] 👷 CI/CD
 - [ ] 📝 Documentation Update
+- [ ] 📌 Etc
 
 ## 🚩 Summary
 <!-- 무엇을 왜 변경했는지 한 문장으로 요약 -->
