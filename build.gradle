@@ -3,6 +3,7 @@ plugins {
     id 'org.springframework.boot' version '3.4.5'
     id 'io.spring.dependency-management' version '1.1.7'
     id 'org.asciidoctor.jvm.convert' version '3.3.2'
+    id 'org.sonarqube' version '6.2.0.5505'
 }
 
 group = 'kr.growup'
@@ -41,6 +42,14 @@ dependencies {
     testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
     testImplementation 'org.springframework.security:spring-security-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+sonar {
+    properties {
+        property "sonar.projectKey", "GU-99_havruta-be"
+        property "sonar.organization", "gu-99"
+        property "sonar.host.url", "https://sonarcloud.io"
+    }
 }
 
 tasks.named('test') {
