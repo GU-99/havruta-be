@@ -1,0 +1,14 @@
+spring:
+  profiles:
+    active: local
+
+  application:
+    name: havruta
+
+  jpa:
+    open-in-view: false
+
+server:
+  error:
+    whitelabel:
+      enabled: false
