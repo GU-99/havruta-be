@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <statusListener class="ch.qos.logback.core.status.NopStatusListener" />
+
+    <springProfile name="local">
+        <include resource="logback/console-appender.xml"/>
+
+        <root level="INFO">
+            <appender-ref ref="CONSOLE"/>
+        </root>
+
+        <logger name="kr.growup.havrutabe" level="DEBUG"/>
+    </springProfile>
+
+    <springProfile name="prod">
+        <include resource="logback/file-appender.xml"/>
+        <include resource="logback/ecs-file-appender.xml"/>
+
+        <root level="INFO">
+            <appender-ref ref="INFO_FILE"/>
+            <appender-ref ref="WARN_FILE"/>
+            <appender-ref ref="ERROR_FILE"/>
+
+            <appender-ref ref="INFO_JSON_FILE"/>
+            <appender-ref ref="WARN_JSON_FILE"/>
+            <appender-ref ref="ERROR_JSON_FILE"/>
+        </root>
+
+        <logger name="kr.growup.havrutabe" level="INFO"/>
+        <logger name="org.springframework" level="INFO"/>
+    </springProfile>
+</configuration>
