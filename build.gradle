@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id 'jacoco'
     id 'org.springframework.boot' version '3.4.5'
     id 'io.spring.dependency-management' version '1.1.7'
     id 'org.asciidoctor.jvm.convert' version '3.3.2'
@@ -55,6 +56,29 @@ sonar {
 tasks.named('test') {
     outputs.dir snippetsDir
     useJUnitPlatform()
+    finalizedBy 'jacocoTestReport'
+}
+
+jacocoTestReport {
+    dependsOn test
+
+    reports {
+        html.required = false
+        xml.required = true
+    }
+
+    afterEvaluate {
+        classDirectories.setFrom(files(classDirectories.files.collect {
+            fileTree(dir: it, exclude: [
+                    '**/*Request.class',
+                    '**/*Response.class',
+                    '**/*Dto.class',
+                    '**/*Exception.class',
+                    '**/*Config.class',
+                    '**/*Application.class',
+            ])
+        }))
+    }
 }
 
 tasks.named('asciidoctor') {
