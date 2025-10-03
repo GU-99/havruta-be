@@ -9,3 +9,8 @@ spring:
     console:
       enabled: true
       path: /h2-console
+
+jwt:
+  secret: ${JWT_SECRET:c3f9a1b8e7d62c4f5a0d9b2e8f7c1a6e4d3b9f8c7a2e6d1f9b3c7e8a9d5f2c6}
+  expiration: 3600000 # 1시간
+  refresh-expiration: 604800000 # 7일
