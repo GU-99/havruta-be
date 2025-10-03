@@ -23,17 +23,17 @@ public record UserSignupRequest(
 
         @NotNull
         @Pattern(regexp = NICKNAME_PATTERN)
-        String nickname,
+        String nickname
 
-        @NotNull
-        String verificationCode
+        // @NotNull
+        // String verificationCode
 ) {
     public UserSignupCommand toCommand() {
         return UserSignupCommand.builder()
                 .email(email)
                 .password(password)
                 .nickname(nickname)
-                .verificationCode(verificationCode)
+                // .verificationCode(verificationCode)
                 .build();
     }
 }

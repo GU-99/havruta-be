@@ -14,7 +14,7 @@ public class UserSignupRequestTestBuilder {
     private String nickname = "havruta";
     private String password = "havruta1234!@";
     private String email = "brown@example.com";
-    private String verificationCode = "123456";
+    //private String verificationCode = "123456";
 
     public static UserSignupRequestTestBuilder 가입하는_사용자는() {
         return new UserSignupRequestTestBuilder();
@@ -45,17 +45,17 @@ public class UserSignupRequestTestBuilder {
     }
 
 
-    public UserSignupRequestTestBuilder 인증번호가(String 인증번호) {
-        this.verificationCode = 인증번호;
-        return this;
-    }
+    // public UserSignupRequestTestBuilder 인증번호가(String 인증번호) {
+    //     this.verificationCode = 인증번호;
+    //     return this;
+    // }
 
     public UserSignupRequest 이다() {
         return UserSignupRequest.builder()
                 .password(password)
                 .email(email)
                 .nickname(nickname)
-                .verificationCode(verificationCode)
+                //.verificationCode(verificationCode)
                 .build();
     }
 }
