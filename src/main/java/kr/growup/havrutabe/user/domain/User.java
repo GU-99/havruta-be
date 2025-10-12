@@ -16,7 +16,6 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -25,10 +24,6 @@ import java.time.LocalDateTime;
 @SQLRestriction("is_deleted = false")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class User extends BaseEntity {
-
-    public static final int MAX_LINKS_PER_USER = 5;
-    public static final int MIN_PASSWORD_LENGTH = 8;
-    public static final int MAX_PASSWORD_LENGTH = 16;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -46,12 +41,19 @@ public class User extends BaseEntity {
     @Column(nullable = false)
     private Provider provider;
 
+    private String profileImageUrl;
+
+    private Boolean isTempPassword;
+
     @Builder
-    public User(String nickname, String password, String email, Provider provider) {
+    public User(String nickname, String password, String email, Provider provider, String profileImageUrl, Boolean isTempPassword) {
         this.nickname = nickname;
         this.password = password;
         this.email = email;
         this.provider = provider;
+        this.profileImageUrl = profileImageUrl;
+        this.isTempPassword = isTempPassword;
+
     }
 
     public void encodePassword(PasswordEncoder passwordEncoder) {

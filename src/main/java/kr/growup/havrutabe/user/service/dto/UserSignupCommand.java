@@ -8,8 +8,8 @@ import lombok.Builder;
 public record UserSignupCommand(
         String email,
         String password,
-        String nickname,
-        String verificationCode
+        String nickname
+        // String verificationCode
 ) {
     public User toEntity() {
         return User.builder()

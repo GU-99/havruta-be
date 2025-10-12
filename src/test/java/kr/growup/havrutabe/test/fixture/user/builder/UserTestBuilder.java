@@ -16,6 +16,8 @@ public class UserTestBuilder {
     private String password = "havruta1234!@";
     private String nickname = "하브루타";
     private Provider provider = Provider.LOCAL;
+    private String profileImageUrl = "https://google.com/photo.jpg";
+    private Boolean isTempPassword = false;
 
     public static UserTestBuilder 사용자는() {
         return new UserTestBuilder();
@@ -41,19 +43,29 @@ public class UserTestBuilder {
         return this;
     }
 
-    public UserTestBuilder 인증_프로바이더가(Provider 인증_프로바이더) {
-        this.provider = 인증_프로바이더;
+    public UserTestBuilder 제공자가(Provider provider) {
+        this.provider = provider;
         return this;
     }
 
+    public UserTestBuilder 프로필_이미지가(String profileImageUrl) {
+        this.profileImageUrl = profileImageUrl;
+        return this;
+    }
+
+    public UserTestBuilder 임시_비밀번호_여부가(Boolean isTempPassword) {
+        this.isTempPassword = isTempPassword;
+        return this;
+    }
 
     public User 이다() {
-        var user = User.builder()
+        User user = User.builder()
                 .email(email)
                 .password(password)
                 .provider(provider)
                 .nickname(nickname)
-
+                .profileImageUrl(profileImageUrl)
+                .isTempPassword(isTempPassword)
                 .build();
         ReflectionTestUtils.setField(user, "id", id);
         return user;
