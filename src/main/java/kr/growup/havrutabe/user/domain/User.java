@@ -41,12 +41,19 @@ public class User extends BaseEntity {
     @Column(nullable = false)
     private Provider provider;
 
+    private String profileImageUrl;
+
+    private Boolean isTempPassword;
+
     @Builder
-    public User(String nickname, String password, String email, Provider provider) {
+    public User(String nickname, String password, String email, Provider provider, String profileImageUrl, Boolean isTempPassword) {
         this.nickname = nickname;
         this.password = password;
         this.email = email;
         this.provider = provider;
+        this.profileImageUrl = profileImageUrl;
+        this.isTempPassword = isTempPassword;
+
     }
 
     public void encodePassword(PasswordEncoder passwordEncoder) {

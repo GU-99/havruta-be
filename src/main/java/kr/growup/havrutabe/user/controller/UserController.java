@@ -7,10 +7,14 @@ import kr.growup.havrutabe.user.controller.dto.response.AuthResponse;
 import kr.growup.havrutabe.user.controller.dto.request.LoginRequest;
 import kr.growup.havrutabe.user.controller.dto.request.NicknameDuplicationCheckRequest;
 import kr.growup.havrutabe.user.controller.dto.request.UserSignupRequest;
+import kr.growup.havrutabe.user.controller.dto.response.UserResponse;
 import kr.growup.havrutabe.user.service.UserService;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,7 +23,7 @@ import java.net.URI;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/user")
+@RequestMapping("/api/v1/users")
 public class UserController {
 
     private final UserService userService;
@@ -51,6 +55,12 @@ public class UserController {
     public ResponseEntity<Void> logout(@AuthenticationPrincipal CustomUserDetail userDetail) {
         userService.logout(userDetail.getId());
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/me")
+    public ResponseEntity<UserResponse> getUser(@AuthenticationPrincipal CustomUserDetail userDetail) {
+        UserResponse response = userService.getUser(userDetail.getId());
+        return ResponseEntity.ok(response);
     }
 }
 

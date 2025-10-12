@@ -8,6 +8,8 @@ import kr.growup.havrutabe.common.security.CustomUserDetail;
 import kr.growup.havrutabe.common.security.JwtTokenProvider;
 import kr.growup.havrutabe.test.annotation.AutoKoreanDisplayName;
 import kr.growup.havrutabe.user.controller.dto.response.AuthResponse;
+import kr.growup.havrutabe.user.controller.dto.response.UserResponse;
+import kr.growup.havrutabe.user.domain.Provider;
 import kr.growup.havrutabe.user.domain.User;
 import kr.growup.havrutabe.user.repository.UserRepository;
 import kr.growup.havrutabe.user.service.UserService;
@@ -350,6 +352,111 @@ public class UserServiceTest {
             assertThatThrownBy(() -> userService.checkNicknameDuplication(닉네임_중복_검사_요청))
                     .isInstanceOf(BusinessException.class)
                     .hasFieldOrPropertyWithValue("errorCode", ErrorCode.NICKNAME_ALREADY_EXISTS);
+        }
+    }
+
+    @Nested
+    class 사용자_정보_조회_시에 {
+
+        @Test
+        void 성공적으로_사용자_정보를_조회한다() {
+            // given
+            Long 사용자_ID = 1L;
+            String 이메일 = "test@test.com";
+            String 닉네임 = "테스트유저";
+            Provider 제공자 = Provider.LOCAL;
+            String 프로필_이미지_URL = "https://example.com/profile.jpg";
+            Boolean 임시_비밀번호_여부 = false;
+
+            User 조회할_사용자 = 사용자는()
+                    .식별자가(사용자_ID)
+                    .이메일이(이메일)
+                    .닉네임이(닉네임)
+                    .제공자가(제공자)
+                    .프로필_이미지가(프로필_이미지_URL)
+                    .임시_비밀번호_여부가(임시_비밀번호_여부)
+                    .이다();
+
+            when(userRepository.findByIdOrThrow(사용자_ID)).thenReturn(조회할_사용자);
+
+            // when
+            UserResponse response = userService.getUser(사용자_ID);
+
+            // then
+            assertThat(response).isNotNull();
+            assertThat(response.userId()).isEqualTo(사용자_ID);
+            assertThat(response.email()).isEqualTo(이메일);
+            assertThat(response.nickname()).isEqualTo(닉네임);
+            assertThat(response.provider()).isEqualTo(제공자);
+            assertThat(response.profileImageUrl()).isEqualTo(프로필_이미지_URL);
+            assertThat(response.isTempPassword()).isEqualTo(임시_비밀번호_여부);
+
+            verify(userRepository).findByIdOrThrow(userIdCaptor.capture());
+            assertThat(userIdCaptor.getValue()).isEqualTo(사용자_ID);
+        }
+
+        @Test
+        void 존재하지_않는_사용자를_조회하면_예외가_발생한다() {
+            // given
+            Long 존재하지_않는_사용자_ID = 999L;
+
+            when(userRepository.findByIdOrThrow(존재하지_않는_사용자_ID))
+                    .thenThrow(new BusinessException(ErrorCode.USER_NOT_FOUND));
+
+            // when & then
+            assertThatThrownBy(() -> userService.getUser(존재하지_않는_사용자_ID))
+                    .isInstanceOf(BusinessException.class)
+                    .hasFieldOrPropertyWithValue("errorCode", ErrorCode.USER_NOT_FOUND);
+
+            verify(userRepository).findByIdOrThrow(userIdCaptor.capture());
+            assertThat(userIdCaptor.getValue()).isEqualTo(존재하지_않는_사용자_ID);
+        }
+
+        @Test
+        void 임시_비밀번호를_사용하는_사용자_정보를_조회한다() {
+            // given
+            Long 사용자_ID = 3L;
+            String 이메일 = "temp@test.com";
+            Boolean 임시_비밀번호_여부 = true;
+
+            User 임시_비밀번호_사용자 = 사용자는()
+                    .식별자가(사용자_ID)
+                    .이메일이(이메일)
+                    .임시_비밀번호_여부가(임시_비밀번호_여부)
+                    .이다();
+
+            when(userRepository.findByIdOrThrow(사용자_ID)).thenReturn(임시_비밀번호_사용자);
+
+            // when
+            UserResponse response = userService.getUser(사용자_ID);
+
+            // then
+            assertThat(response).isNotNull();
+            assertThat(response.isTempPassword()).isTrue();
+            assertThat(response.userId()).isEqualTo(사용자_ID);
+        }
+
+        @Test
+        void 프로필_이미지가_없는_사용자_정보를_조회한다() {
+            // given
+            Long 사용자_ID = 4L;
+            String 닉네임 = "이미지없는유저";
+
+            User 프로필_이미지_없는_사용자 = 사용자는()
+                    .식별자가(사용자_ID)
+                    .닉네임이(닉네임)
+                    .프로필_이미지가(null)
+                    .이다();
+
+            when(userRepository.findByIdOrThrow(사용자_ID)).thenReturn(프로필_이미지_없는_사용자);
+
+            // when
+            UserResponse response = userService.getUser(사용자_ID);
+
+            // then
+            assertThat(response).isNotNull();
+            assertThat(response.profileImageUrl()).isNull();
+            assertThat(response.nickname()).isEqualTo(닉네임);
         }
     }
 }

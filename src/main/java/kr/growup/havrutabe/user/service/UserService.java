@@ -7,6 +7,7 @@ import kr.growup.havrutabe.common.exception.ErrorCode;
 import kr.growup.havrutabe.common.security.CustomUserDetail;
 import kr.growup.havrutabe.common.security.JwtTokenProvider;
 import kr.growup.havrutabe.user.controller.dto.response.AuthResponse;
+import kr.growup.havrutabe.user.controller.dto.response.UserResponse;
 import kr.growup.havrutabe.user.domain.User;
 import kr.growup.havrutabe.user.service.dto.LoginCommand;
 import kr.growup.havrutabe.user.service.dto.NicknameDuplicationCheckCommand;
@@ -122,6 +123,11 @@ public class UserService {
     @Transactional
     public void logout(Long userId) {
         refreshTokenRepository.revokeAllByUserId(userId);
+    }
+
+    public UserResponse getUser(Long userId) {
+        User user = userRepository.findByIdOrThrow(userId);
+        return UserResponse.from(user);
     }
 
     public void checkNicknameDuplication(NicknameDuplicationCheckCommand command) {
